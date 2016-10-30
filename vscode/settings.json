@@ -1,0 +1,12 @@
+// 將您的設定放入此檔案中以覆寫預設值
+{
+    "editor.fontSize": 13,
+    "editor.insertSpaces": false,
+    "editor.renderIndentGuides": true,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 3000,
+    "editor.renderWhitespace": "boundary",
+    "stylelint.enable": true,
+    "eslint.enable": true,
+    "eslint.run": "onSave"
+}

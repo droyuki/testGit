@@ -1,128 +1,325 @@
-et nocompatible
-colorscheme asmanian2
-"colorscheme elflord
-syntax on
-set hls
-set ls=2
-set cursorline
-set nu
-set ai
-set softtabstop=4
+set nocompatible                                                                "This must be first, because it changes other options as a side effect.
+set clipboard=unnamed
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'lambdalisue/vim-fullscreen'
+Plugin 'ctrlpvim/ctrlp.vim' "全域搜尋
+Plugin 'Raimondi/delimitMate' "自動補括號
+Plugin 'mattn/emmet-vim'
+Plugin 'tpope/vim-commentary' "自動註解
+Plugin 'tpope/vim-surround' "自動補tag, 指令ysiw<p>
+Plugin 'scrooloose/syntastic' "Syntax check
+Plugin 'scrooloose/nerdtree' "檔案結構
+Plugin 'airblade/vim-gitgutter' "git diff tool
+Plugin 'vim-airline/vim-airline' "狀態列
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'sheerun/vim-polyglot' "language pack
+Plugin 'duff/vim-bufonly' "del buffer
+Plugin 'gregsexton/MatchTag' "match html tag
+Plugin 'kristijanhusak/vim-hybrid-material' "Material Theme
+Plugin 'honza/vim-snippets'
+Plugin 'mtscout6/syntastic-local-eslint.vim'
+Plugin 'dkprice/vim-easygrep'
+call vundle#end()
+
+filetype plugin indent on                                                       "Enable plugins and indents by filetype
+
+let g:mapleader = ","                                                           "Change leader to a comma
+
+let g:enable_bold_font = 1                                                      "Enable bold font in colorscheme
+
+" ================ GUI options ====================
+
+set guioptions-=m                                                               "remove menu bar
+set guioptions-=T                                                               "remove toolbar
+set guioptions-=L                                                               "remove left scrollbar when vertical split
+set guioptions-=r                                                               "remove left scrollbar when vertical split
+set guioptions-=l                                                               "remove left scrollbar
+set guifont=InconsolataForPowerline\ Nerd\ Font\ Medium\ 12                     "font setup
+set linespace=10                                                                "Set lineheight in gvim
+
+" ================ General Config ====================
+
+set t_Co=256                                                                    "Set 256 colors
+set title                                                                       "change the terminal's title
+set number                                                                      "Line numbers are good
+set backspace=indent,eol,start                                                  "Allow backspace in insert mode
+set history=500                                                                 "Store lots of :cmdline history
+set showcmd                                                                     "Show incomplete cmds down the bottom
+set noshowmode                                                                  "Hide showmode because of the powerline plugin
+set gdefault                                                                    "Set global flag for search and replace
+set gcr=a:blinkon500-blinkwait500-blinkoff500                                   "Set cursor blinking rate
+set cursorline                                                                  "Highlight current line
+set autoread                                                                    "Reload files changed outside vim
+set smartcase                                                                   "Smart case search if there is uppercase
+set ignorecase                                                                  "case insensitive search
+set hlsearch                                                                    "Highlight search term
+set incsearch                                                                   "Jump to found term while searching
+set showmatch                                                                   "Highlight matching bracket
+set mouse=a                                                                     "Enable mouse
+set nostartofline                                                               "Jump to first non-blank character
+set timeoutlen=1000 ttimeoutlen=200                                             "Reduce Command timeout for faster escape and O
+set laststatus=2                                                                "Show statusbar
+set fileencoding=utf-8 encoding=utf-8                                           "Set utf-8 encoding on write
+set wrap                                                                        "Enable word wrap
+set linebreak                                                                   "Wrap lines at convenient points
+set listchars=tab:\ \ ,trail:·                                                  "Set trails for tabs and spaces
+set list                                                                        "Enable listchars
+set lazyredraw                                                                  "Do not redraw on registers and macros
+set completeopt-=preview                                                        "Disable preview for autocomplete
+set background=dark                                                             "Set background to dark
+set hidden                                                                      "Hide buffers in background
+set conceallevel=2 concealcursor=i                                              "neosnippets conceal marker
+set splitright                                                                  "Set up new splits positions
+set tags=./tags;/                                                               "Find tags file
+
+syntax on                                                                       "turn on syntax highlighting
+colorscheme hybrid_material
+
+" ================ Turn Off Swap Files ==============
+
+set noswapfile
+set nobackup
+set nowb
+
+" ================ Persistent Undo ==================
+
+" Keep undo history across sessions, by storing in file.
+silent !mkdir ~/.vim/backups > /dev/null 2>&1
+set undodir=~/.vim/backups
+set undofile
+
+" ================ Indentation ======================
+
+set smarttab
 set shiftwidth=4
-set ic
-set t_Co=256
-let g:AutoComplPop_IgnoreCaseOption=1
-"let g:acp_completeOption = '.,t,i,b'
-set ignorecase
-set statusline=%<%f\ %m%=\ %h%r\ %-19([%p%%]\ %3l,%02c%03V%)%y
-" Can edit big5
-set fileencodings=utf-8,big5,gbk,sjis,euc-jp,euc-kr,utf-bom,iso8859-1
-set encoding=utf-8
-set termencoding=utf-8
+set softtabstop=4
+set tabstop=4
+set expandtab
+set smartindent
+set autoindent
+set nofoldenable
 
-highlight Cursorline ctermfg=none ctermbg=none cterm=none
-highlight TabLineSel ctermfg=yellow ctermbg=darkblue cterm=bold
-highlight StatusLine ctermfg=yellow ctermbg=darkblue cterm=bold
-highlight LineNr ctermfg=yellow
-" configure tags - add additional tags here or comment out not-used ones
-set tags+=~/.vim/tags/cpp
-"set tags+=~/.vim/tags/gl
-"set tags+=~/.vim/tags/sdl
-"set tags+=~/.vim/tags/qt4
+" ================ Auto commands ======================
 
-" OmniCppComplete
-let OmniCpp_NamespaceSearch = 1
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_ShowAccess = 1
-let OmniCpp_MayCompleteDot = 1
-let OmniCpp_MayCompleteArrow = 1
-let OmniCpp_MayCompleteScope = 1
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-" automatically open and close the popup menu / preview window
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-set completeopt=menuone,menu,longest,preview
-" Set F12 to use ctags for C++
-map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+augroup vimrc
+    autocmd!
+augroup END
 
-setl omnifunc=nullcomplete#Complete
-autocmd FileType * setl omnifunc=nullcomplete#Complete
-autocmd FileType python setl omnifunc=pythoncomplete#Complete
-autocmd FileType javascript setl omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html setl omnifunc=htmlcomplete#CompleteTags noci
-autocmd FileType css setl omnifunc=csscomplete#CompleteCSS noci
-autocmd FileType xml setl omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php setl omnifunc=phpcomplete#CompletePHP
-autocmd FileType c setl omnifunc=ccomplete#Complete
-" Set completement for C++
-autocmd FileType h setl omnifunc=cppcomplete#Complete
-autocmd FileType cpp setl omnifunc=cppcomplete#Complete
+autocmd vimrc BufWritePre * :call s:StripTrailingWhitespaces()                  "Auto-remove trailing spaces
+"autocmd vimrc InsertLeave * NeoSnippetClearMarkers                              "Remove unused markers for snippets
+autocmd vimrc FileType html,javascript setlocal sw=2 sts=2 ts=2                 "Set 2 indent for html
+autocmd vimrc FileType php,javascript setlocal cc=80                            "Set right margin only for php and js
 
-" Set F2 as nohls 
-map <silent> <F2> <ESC>:nohls<CR>
-map <silent> <F4> <ESC>:qa<CR>
-map <silent> <F5> <ESC>:wa<CR>
+autocmd vimrc GUIEnter * set vb t_vb=                                           "Disable visual bell completely
+autocmd vimrc VimEnter * set vb t_vb=
 
-map <C-t>l <ESC>:tabnext<CR>
-map <C-t>h <ESC>:tabprev<CR>
-map <C-t>n <ESC>:tabnew<CR><ESC>:e
-map <C-t>c <ESC>:tabclose<CR>
-" Set F9 for Tlist
-map <silent> <F9> :TlistToggle<cr>
+autocmd vimrc BufNewFile,BufReadPost *.md set filetype=markdown                 "Set *.md extension to markdown filetype
+autocmd vimrc FileType nerdtree syntax match hideBracketsInNerdTree
+            \ "\]" contained conceal containedin=ALL
 
-""""""""""""""""""""""""""""""
-" Tag list (ctags)
-""""""""""""""""""""""""""""""
-let Tlist_Ctags_Cmd = '/usr/bin/ctags'
-let Tlist_Show_One_File = 1            "不同时显示多个文件的tag，只显示当前文件的
-let Tlist_Exit_OnlyWindow = 1          "如果taglist窗口是最后一个窗口，则退出vim
-""""""""""""""""""""""""""""""
-" BufExplorer
-""""""""""""""""""""""""""""""
-let g:bufExplorerDefaultHelp=0       " Do not show default help.
-let g:bufExplorerShowRelativePath=1  " Show relative paths.
-let g:bufExplorerSortBy='mru'        " Sort by most recently used.
-let g:bufExplorerSplitRight=0        " Split left.
-let g:bufExplorerSplitVertical=1     " Split vertically.
-let g:bufExplorerSplitVertSize = 30  " Split width
-let g:bufExplorerUseCurrentWindow=1  " Open in new window.
-autocmd BufWinEnter \[Buf\ List\] setl nonumber 
+autocmd vimrc VimEnter,BufNewFile,BufReadPost * call s:LoadLocalVimrc()         "Load per project vimrc (Used for custom test mappings, etc.)
 
-""""""""""""""""""""""""""""""
-" winManager setting
-""""""""""""""""""""""""""""""
-let g:winManagerWindowLayout = "BufExplorer,FileExplorer|TagList"
-let g:winManagerWidth = 30
-let g:defaultExplorer = 0
-nmap <C-W><C-F> :FirstExplorerWindow<cr>
-nmap <C-W><C-B> :BottomExplorerWindow<cr>
-nmap <silent> <F8> :WMToggle<cr> 
-nmap <silent> <F7> :cw 10 <cr>
+" ================ Completion =======================
 
-"""""""""""""""""""""""""""""
-" Cscope setting
-"""""""""""""""""""""""""""""
-nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+set wildmode=list:full
+set wildmenu                                                                    "enable ctrl-n and ctrl-p to scroll thru matches
+set wildignore=*.o,*.obj,*~                                                     "stuff to ignore when tab completing
+set wildignore+=*vim/backups*
+set wildignore+=*sass-cache*
+set wildignore+=*cache*
+set wildignore+=*logs*
+set wildignore+=*node_modules/**
+set wildignore+=*DS_Store*
+set wildignore+=*.gem
+set wildignore+=log/**
+set wildignore+=tmp/**
+set wildignore+=*.png,*.jpg,*.gif
 
-if has("cscope")
-set csprg=/usr/bin/cscope
-set csto=0
-set cst
-set nocsverb
-" add any database in current directory
-if filereadable("cscope.out")
-cs add cscope.out
-" else add database pointed to by environment
-elseif $CSCOPE_DB != ""
-cs add $CSCOPE_DB
-endif
-set csverb
-set cscopetag
-set cscopequickfix=s-,g-,c-,d-,t-,e-,f-,i-
-endif
+" ================ Scrolling ========================
+
+set scrolloff=8                                                                 "Start scrolling when we're 8 lines away from margins
+set sidescrolloff=15
+set sidescroll=5
+
+" ================ Abbreviations ====================
+
+cnoreabbrev Wq wq
+cnoreabbrev WQ wq
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Qa qa
+cnoreabbrev Bd bd
+cnoreabbrev bD bd
+cnoreabbrev wrap set wrap
+cnoreabbrev nowrap set nowrap
+cnoreabbrev bda BufOnly
+cnoreabbrev t tabe
+cnoreabbrev T tabe
+
+" ================ Functions ========================
+
+function! s:StripTrailingWhitespaces()
+    let l:l = line(".")
+    let l:c = col(".")
+    %s/\s\+$//e
+    call cursor(l:l, l:c)
+endfunction
+
+function! s:LoadLocalVimrc()
+    if filereadable(glob(getcwd() . '/.vimrc.local'))
+        :execute 'source '.fnameescape(glob(getcwd(). '/.vimrc.local'))
+    endif
+endfunction
+
+" ================ Custom mappings ========================
+
+" Comment map
+nmap <Leader>c gcc
+" Line comment command
+xmap <Leader>c gc
+
+" Map save to Ctrl + S
+map <c-s> :w<CR>
+imap <c-s> <C-o>:w<CR>
+" Also save with ,w
+nnoremap <Leader>w :w<CR>
+
+" Easier window navigation
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
+" Open vertical split
+nnoremap <Leader>v <C-w>v
+
+" Down is really the next line
+nnoremap j gj
+nnoremap k gk
+
+" Expand snippets on tab if snippets exists, otherwise do autocompletion
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\ : pumvisible() ? "\<C-n>" : "\<TAB>"
+" If popup window is visible do autocompletion from back
+imap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Fix for jumping over placeholders for neosnippet
+smap <expr><TAB> neosnippet#jumpable() ?
+\ "\<Plug>(neosnippet_jump)"
+\: "\<TAB>"
+
+" Map for Escape key
+inoremap jj <Esc>
+
+" Yank to the end of the line
+nnoremap Y y$
+
+" Copy to system clipboard
+vnoremap <C-c> "+y
+" Paste from system clipboard with Ctrl + v
+inoremap <C-v> <Esc>"+p
+nnoremap <Leader>p "0p
+
+" Move to the end of yanked text after yank and paste
+nnoremap p p`]
+vnoremap y y`]
+vnoremap p p`]
+
+" Move selected lines up and down
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+" Clear search highlight
+nnoremap <Leader><space> :noh<CR>
+
+" Handle syntastic error window
+nnoremap <Leader>es :Errors<CR>
+nnoremap <Leader>ec :lclose<CR>
+
+" Find current file in NERDTree
+nnoremap <Leader>hf :NERDTreeFind<CR>
+" Open NERDTree
+nnoremap <Leader>n :NERDTreeToggle<CR>
+
+" Toggle between last 2 buffers
+nnoremap <leader><tab> <c-^>
+
+" Auto change directory to match current file
+nnoremap <Leader>dc :cd %:p:h<CR>:pwd<CR>
+
+" Filesearch plugin map for searching in whole folder
+nnoremap <Leader>f :Ack
+
+" Toggle buffer list
+nnoremap <Leader>b :CtrlPBuffer<CR>
+nnoremap <Leader>t :CtrlPBufTag<CR>
+nnoremap <Leader>m :CtrlPMRU<CR>
+
+" Maps for indentation in normal mode
+nnoremap <tab> >>
+nnoremap <s-tab> <<
+
+" Indenting in visual mode
+xnoremap <s-tab> <gv
+xnoremap <tab> >gv
+
+" Resize window with shift + and shift -
+nnoremap + <c-w>5>
+nnoremap _ <c-w>5<
+
+" Center highlighted search
+nnoremap n nzz
+nnoremap N Nzz
+
+" ================ plugins setups ========================
+
+let g:ctrlp_match_window = 'bottom,order:ttb,min:1,max:25,results:25'           "Ctrlp window setup
+let g:ctrlp_custom_ignore = {'dir':  '\v[\/]\.(meteor)$'}                       "Ignore .meteor folder
+let g:ctrlp_prompt_mappings = {'PrtDeleteEnt()': ['<c-@>']}                     "Map delete buffer in ctrlp
+
+let g:airline_powerline_fonts = 1                                               "Enable powerline fonts
+let g:airline_theme = "hybrid"                                                  "Set theme to powerline default theme
+let g:airline_section_y = '%{substitute(getcwd(), expand("$HOME"), "~", "g")}'  "Set relative path
+let g:airline#extensions#whitespace#enabled = 0                                 "Disable whitespace extension
+let g:airline#extensions#tabline#enabled = 1                                    "Enable tabline extension
+let g:airline#extensions#tabline#left_sep = ' '                                 "Left separator for tabline
+let g:airline#extensions#tabline#left_alt_sep = '│'                             "Right separator for tabline
+
+let g:gitgutter_realtime = 0                                                    "Disable gitgutter in realtime
+let g:gitgutter_eager = 0                                                       "Disable gitgutter to eager load on tab or buffer switch
+
+let g:user_emmet_expandabbr_key = '<c-e>'                                       "Change trigger emmet key
+let g:user_emmet_next_key = '<c-n>'                                             "Change trigger jump to next for emmet
+
+let g:NERDTreeChDirMode = 2                                                     "Always change the root directory
+let g:NERDTreeMinimalUI = 1                                                     "Disable help text and bookmark title
+let g:NERDTreeShowHidden = 1                                                    "Show hidden files in NERDTree
+let g:NERDTreeIgnore=['\.git$', '\.sass-cache$', '\.vagrant', '\.idea']
+
+let g:neocomplete#enable_smart_case = 1                                         "Use smartcase.
+let g:neocomplete#data_directory = '~/.vim/.neocomplete'                        "Folder where neocomplete saves cache
+let g:neocomplete#max_list = 15                                                 "Limit neocomplete list to 10 entries
+let g:neocomplete#enable_at_startup = 1                                         "Enable autocomplete
+
+let g:neosnippet#disable_runtime_snippets = {'_' : 1}                           "Snippets setup
+let g:neosnippet#snippets_directory = [
+            \ '~/.vim/bundle/vim-snippets/snippets',
+            \ '~/.vim/snippets']
+
+let g:ackhighlight = 1                                                          "Highlight current search
+
+let g:syntastic_enable_signs = 1
+let g:syntastic_error_symbol = "x"
+let g:syntastic_style_error_symbol = "x"
+let g:syntastic_warning_symbol = "▵"
+let g:syntastic_style_warning_symbol = "▵"
+let g:syntastic_loc_list_height = 5                                             "Height of the errors window
+let g:syntastic_always_populate_loc_list = 1                                    "Always popuplate syntastic error list
+let g:syntastic_aggregate_errors = 1                                            "Show errors from all checkers
+let g:syntastic_auto_jump = 3                                                   "Jump to first error detected
+let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']                        "Enable only basic syntax checking for php
+let g:syntastic_javascript_checkers = ['eslint']                                "Enable these linters for js
+let g:syntastic_scss_checkers = []                                              "Disable scss checking
+
+let g:delimitMate_expand_cr = 2                                                 "auto indent on enter

@@ -3,6 +3,7 @@
     "editor.fontSize": 13,
     "editor.insertSpaces": false,
     "editor.renderIndentGuides": true,
+    "editor.detectIndentation": false,
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 3000,
     "editor.renderWhitespace": "boundary",

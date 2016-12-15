@@ -4,12 +4,18 @@
 	"editor.insertSpaces": false,
 	"editor.renderIndentGuides": true,
 	"editor.detectIndentation": false,
-	"editor.formatOnType": true,
 	"javascript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
 	"files.autoSave": "afterDelay",
 	"files.autoSaveDelay": 3000,
 	"editor.renderWhitespace": "boundary",
-	"stylelint.enable": true,
+	"window.showFullPath": true,
 	"eslint.enable": true,
-	"eslint.run": "onSave"
+	"eslint.run": "onSave",
+	"window.zoomLevel": 0,
+	"typescript.check.tscVersion": false,
+	"workbench.editor.enablePreview": false,
+	"workbench.editor.enablePreviewFromQuickOpen": false,
+	"typescript.tsdk": "/usr/local/lib/node_modules/typescript/lib",
+	"editor.renderLineHighlight": "all",
+	"workbench.statusBar.visible": true
 }

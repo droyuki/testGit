@@ -17,5 +17,13 @@
 	"workbench.editor.enablePreviewFromQuickOpen": false,
 	"typescript.tsdk": "/usr/local/lib/node_modules/typescript/lib",
 	"editor.renderLineHighlight": "all",
-	"workbench.statusBar.visible": true
+	"workbench.statusBar.visible": true,
+	"files.watcherExclude": {
+		"**/.git/objects/**": true,
+		"**/node_modules/**": true
+	},
+	"search.exclude": {
+		"**/node_modules": true,
+		"**/bower_components": true
+	}
 }
